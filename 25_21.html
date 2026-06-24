@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>비자 신청서 작성 문제</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            margin: 20px;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 700px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            margin: 0 auto;
+        }
+        .question-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        /* 여권 스타일 영역 */
+        .passport-box {
+            border: 1px solid #ccc;
+            background: linear-gradient(135deg, #eef7fc 0%, #ffffff 100%);
+            padding: 15px;
+            position: relative;
+            margin-bottom: 30px;
+            box-sizing: border-box;
+        }
+        .passport-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+        .passport-title-left {
+            color: #1a3c6c;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .passport-title-center {
+            color: #1a3c6c;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .passport-body {
+            display: flex;
+            gap: 15px;
+        }
+        .photo-area {
+            width: 120px;
+            height: 150px;
+            background-color: #e0e0e0;
+            border: 1px solid #bbb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #666;
+        }
+        .info-table {
+            flex: 1;
+            border-collapse: collapse;
+        }
+        .info-table td {
+            padding: 3px 5px;
+            vertical-align: top;
+            font-size: 11px;
+        }
+        .label {
+            color: #666;
+            display: block;
+            font-size: 10px;
+        }
+        .value {
+            font-weight: bold;
+            font-size: 13px;
+            color: #111;
+        }
+        .mrz-area {
+            margin-top: 15px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            line-height: 1.4;
+            border-top: 1px dashed #bbb;
+            padding-top: 10px;
+            color: #222;
+        }
+
+        /* 신청서 폼 스타일 영역 */
+        .form-title {
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            color: #1a3c6c;
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+        }
+        .form-subtitle {
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .form-group label {
+            width: 160px;
+            font-family: Arial, sans-serif;
+            font-size: 15px;
+            color: #333;
+        }
+        .form-group input[type="text"] {
+            width: 250px;
+            padding: 6px 8px;
+            border: 1px solid #000;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .date-select-group {
+            display: flex;
+            gap: 5px;
+        }
+        .date-select-group select {
+            padding: 6px 25px 6px 8px;
+            border: 1px solid #000;
+            font-size: 14px;
+            background: #fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"><path d="M0 3l5 5 5-5z" fill="%23000"/></svg>') no-repeat right 8px center;
+            background-size: 10px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        /* 하단 버튼 그룹 스타일 */
+        .button-group {
+            margin-top: 35px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+        .btn {
+            padding: 10px 24px;
+            font-size: 15px;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            color: #fff;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        .btn-primary {
+            background-color: #1a3c6c;
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background-color: #112747;
+        }
+        .btn-info {
+            background-color: #4b6584;
+            color: #fff;
+        }
+        .btn-info:hover {
+            background-color: #3b526d;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="question-title">
+        [문제21] (실무형) 다음의 여권 정보로 해외 비자 신청을 하려고 합니다. 아래 정보를 활용하여 비자 신청서(영문 대문자로 작성)를 완성하십시오.
+    </div>
+
+    <div class="passport-box">
+        <div class="passport-header">
+            <div class="passport-title-left">여권 PASSPORT</div>
+            <div class="passport-title-center">대한민국 REPUBLIC OF KOREA</div>
+            <div style="width: 40px; height: 20px; background:#ddd; border:1px solid #aaa;"></div>
+        </div>
+        
+        <div class="passport-body">
+            <div class="photo-area">
+                [여권 사진]
+            </div>
+            
+            <table class="info-table">
+                <tr>
+                    <td colspan="2">
+                        <span class="label">종류/Type</span>
+                        <span class="value">PM</span>
+                    </td>
+                    <td>
+                        <span class="label">국가코드/Country code</span>
+                        <span class="value">KOR</span>
+                    </td>
+                    <td>
+                        <span class="label">여권번호/Passport No.</span>
+                        <span class="value">M1234567</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <span class="label">성/Surname</span>
+                        <span class="value">HONG</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <span class="label">이름/Given names</span>
+                        <span class="value">GILSOON</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <span class="label">한글성명</span>
+                        <span class="value" style="font-family:'Malgun Gothic';">홍길순</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <span class="label">생년월일/Date of birth</span>
+                        <span class="value">01 2월/FEB 1987</span>
+                    </td>
+                    <td colspan="2">
+                        <span class="label">성별/Sex</span>
+                        <span class="value">F</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <span class="label">국적/Nationality</span>
+                        <span class="value">REPUBLIC OF KOREA</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <span class="label">발행관청/Authority</span>
+                        <span class="value">MINISTRY OF FOREIGN AFFAIRS</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <span class="label">발급일/Date of issue</span>
+                        <span class="value">15 8월/AUG 2020</span>
+                    </td>
+                    <td colspan="2">
+                        <span class="label">기간만료일/Date of expiry</span>
+                        <span class="value">15 8월/AUG 2030</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="mrz-area">
+            PMKORHONG&lt;&lt;GILSOON&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br>
+            M12345670KOR8702010F3008150V2000000000000000
+        </div>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #ccc; margin: 30px 0;">
+
+    <div class="form-title">APPLICANT / PASSPORT INFORMATION</div>
+    <div class="form-subtitle">Refer to your <b>passport</b> and enter all information in the same format.</div>
+
+    <form>
+        <div class="form-group">
+            <label for="familyName">Family Name</label>
+            <input type="text" id="familyName" name="familyName">
+        </div>
+
+        <div class="form-group">
+            <label for="givenName">First (Given) Name</label>
+            <input type="text" id="givenName" name="givenName">
+        </div>
+
+        <div class="form-group">
+            <label for="passportNumber">Passport Number</label>
+            <input type="text" id="passportNumber" name="passportNumber">
+        </div>
+
+        <div class="form-group">
+            <label for="issuanceCountry">Issuance Country</label>
+            <input type="text" id="issuanceCountry" name="issuanceCountry">
+        </div>
+
+        <div class="form-group">
+            <label>Issuance Date</label>
+            <div class="date-select-group">
+                <select name="issuanceDay">
+                    <option value="">Day ▼</option>
+                    <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+                    <option value="4">4</option><option value="5">5</option><option value="6">6</option>
+                    <option value="7">7</option><option value="8">8</option><option value="9">9</option>
+                    <option value="10">10</option><option value="11">11</option><option value="12">12</option>
+                    <option value="13">13</option><option value="14">14</option><option value="15">15</option>
+                    <option value="16">16</option><option value="17">17</option><option value="18">18</option>
+                    <option value="19">19</option><option value="20">20</option><option value="21">21</option>
+                    <option value="22">22</option><option value="23">23</option><option value="24">24</option>
+                    <option value="25">25</option><option value="26">26</option><option value="27">27</option>
+                    <option value="28">28</option><option value="29">29</option><option value="30">30</option>
+                    <option value="31">31</option>
+                </select>
+                <select name="issuanceMonth">
+                    <option value="">Month ▼</option>
+                    <option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option>
+                    <option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option>
+                    <option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option>
+                    <option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
+                </select>
+                <select name="issuanceYear">
+                    <option value="">Year ▼</option>
+                    <option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option>
+                    <option value="2023">2023</option><option value="2022">2022</option><option value="2021">2021</option>
+                    <option value="2020">2020</option><option value="2019">2019</option><option value="2018">2018</option>
+                    <option value="2017">2017</option><option value="2016">2016</option><option value="2015">2015</option>
+                    <option value="2014">2014</option><option value="2013">2013</option><option value="2012">2012</option>
+                    <option value="2011">2011</option><option value="2010">2010</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button type="button" class="btn btn-secondary" onclick="window.location.href='index.html';">이전</button>
+            <button type="button" class="btn btn-primary">답안저장</button>
+            <button type="button" class="btn btn-info">현황표</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

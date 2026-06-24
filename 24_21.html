@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>정부24 - 주민등록등본 발급 신청</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            margin: 20px;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 750px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.08);
+            margin: 0 auto;
+        }
+        
+        /* 상단 고정 문제 지문 스타일 */
+        .question-title {
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            word-break: keep-all;
+            background-color: #f1f5f9;
+            padding: 15px;
+            border-left: 5px solid #1a3c6c;
+        }
+        
+        h3 {
+            font-size: 16px;
+            margin: 20px 0 10px 0;
+            text-align: left;
+            color: #111;
+        }
+
+        /* 주민등록표 조회 데이터 테이블 기본 스타일 */
+        .doc-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 12px;
+        }
+        .doc-table th, .doc-table td {
+            border: 1px solid #94a3b8;
+            padding: 8px;
+            text-align: center;
+        }
+        .doc-table th {
+            background-color: #f8fafc;
+            font-weight: bold;
+            color: #334155;
+        }
+        .doc-table td {
+            color: #0f172a;
+        }
+
+        /* 하단 발급형태 선택(선택발급) 박스 구역 */
+        .select-form-box {
+            border: 1px solid #333;
+            padding: 25px 20px;
+            margin-top: 25px;
+            text-align: left;
+            background-color: #fff;
+        }
+        .form-title-main {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 5px;
+            color: #000;
+        }
+        .form-subtitle {
+            font-size: 12px;
+            color: #555;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        
+        /* 각 설정 항목 행(Row) 디자인 */
+        .form-row {
+            margin-bottom: 16px;
+            display: flex;
+            align-items: flex-start;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        .form-row-title {
+            width: 150px;
+            font-weight: bold;
+            color: #111;
+            padding-top: 2px;
+            flex-shrink: 0;
+        }
+        .form-row-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .form-row label {
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            user-select: none;
+        }
+        
+        /* 연도 직접입력 텍스트 칸 */
+        .inline-input {
+            width: 50px;
+            text-align: center;
+            padding: 3px;
+            border: 1px solid #94a3b8;
+            border-radius: 2px;
+            font-size: 12px;
+        }
+
+        /* 시스템 공통 하단 제어 버튼 구역 */
+        .system-button-group {
+            margin-top: 35px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        .sys-btn {
+            padding: 10px 24px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-secondary { background-color: #6c757d; color: #fff; }
+        .btn-primary { background-color: #1a3c6c; color: #fff; }
+        .btn-info { background-color: #4b6584; color: #fff; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 상단 문제 지문 고정 구역 -->
+    <div class="question-title">
+        [문제21] (실무형) 홍길동님은 정부24에서 홍길동님 가족의 주민등록등본을 신청하여 집에서 프린터로 출력하려고 합니다. 최근 5년 동안의 주소 변동사항을 포함하여 아래의 정보가 표기되도록 발급 문서에 표시할 정보를 선택하여 작업을 완성하십시오.
+    </div>
+
+    <!-- 세대주 및 주소 기본 정보 테이블 -->
+    <h3>주민등록표(등본)</h3>
+    <table class="doc-table">
+        <tr>
+            <th style="width: 20%;">세대주 성명(한자)</th>
+            <td style="width: 30%;">홍길동 (洪吉童)</td>
+            <th style="width: 25%;">세대구성 사유 및 일자</th>
+            <td style="width: 25%;">2010-09-10</td>
+        </tr>
+        <tr>
+            <th>주소</th>
+            <td colspan="3" style="text-align: left; padding-left: 15px;">
+                <strong>현주소:</strong> 대구광역시 동구 첨단로 53, 101동-101호<br>
+                <span style="color: #666; font-size: 11px;">발생일 / 신고일 : 2016-06-01 / 2016-06-01 (변동사유: 거주자)</span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" style="background-color: #f8fafc; color: #64748b; font-weight: bold;">= 공 란 =</td>
+        </tr>
+    </table>
+
+    <!-- 세대원 상세 변동 내역 테이블 -->
+    <table class="doc-table">
+        <thead>
+            <tr>
+                <th style="width: 10%;">번호</th>
+                <th style="width: 15%;">세대주관계</th>
+                <th style="width: 35%;">성명(한자)<br>주민등록번호</th>
+                <th style="width: 25%;">발생일 / 신고일<br>등록상태</th>
+                <th style="width: 15%;">변동사유</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>본인</td>
+                <td>홍길동 (洪吉童)<br>690301-1******</td>
+                <td>-<br>거주자</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>배우자</td>
+                <td>이세희 (李世熙)<br>730815-2345678</td>
+                <td>-<br>거주자</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>자</td>
+                <td>홍수아 (洪秀雅)<br>111003-4123456</td>
+                <td>-<br>거주자</td>
+                <td>-</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- 주민등록등본 발급형태 선택 영역 (모든 요소 체크 해제 상태) -->
+    <div class="select-form-box">
+        <div class="form-title-main">주민등록등본 발급형태 선택(선택발급)</div>
+        <div class="form-subtitle">※ 발급 문서에 표시할 정보를 선택하세요.</div>
+        
+        <!-- 1. 과거의 주소 변동사항 -->
+        <div class="form-row">
+            <div class="form-row-title">과거의 주소 변동사항</div>
+            <div class="form-row-content">
+                <label><input type="radio" name="address_option"> 과거의 주소 전체</label>
+                <label><input type="radio" name="address_option"> 직접입력 : 최근 <input type="text" class="inline-input"> 년</label>
+            </div>
+        </div>
+        
+        <!-- 2. 세대 구성 정보 -->
+        <div class="form-row">
+            <div class="form-row-title">세대 구성 정보</div>
+            <div class="form-row-content">
+                <label><input type="checkbox" name="generation_info"> 세대 구성 사유</label>
+                <label><input type="checkbox" name="generation_info"> 세대 구성 일자</label>
+            </div>
+        </div>
+
+        <!-- 3. 세대 구성원 정보 -->
+        <div class="form-row">
+            <div class="form-row-title">세대 구성원 정보</div>
+            <div class="form-row-content">
+                <label><input type="checkbox" name="member_info"> 세대주와의 관계</label>
+                <label><input type="checkbox" name="member_info"> 동거인</label>
+                <label><input type="checkbox" name="member_info"> 교부대상자 외 세대주, 세대원, 외국인 등의 이름</label>
+            </div>
+        </div>
+
+        <!-- 4. 주민등록번호 뒷자리 -->
+        <div class="form-row">
+            <div class="form-row-title">주민등록번호 뒷자리</div>
+            <div class="form-row-content">
+                <label><input type="radio" name="jumin_option"> 본인</label>
+                <label><input type="radio" name="jumin_option"> 세대원</label>
+            </div>
+        </div>
+
+        <!-- 5. 수령방법 -->
+        <div class="form-row">
+            <div class="form-row-title">수령방법</div>
+            <div class="form-row-content">
+                <label><input type="radio" name="delivery_option"> 온라인발급(본인출력)</label>
+                <label><input type="radio" name="delivery_option"> 온라인발급(전자문서지갑)</label>
+                <label><input type="radio" name="delivery_option"> 등기보통우편</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- 시스템 하단 고정 공통 버튼 구역 -->
+    <div class="system-button-group">
+        <button type="button" class="sys-btn btn-secondary" onclick="window.location.href='index.html';">이전</button>
+        <button type="button" class="sys-btn btn-primary" onclick="alert('답안이 안전하게 저장되었습니다.')">답안저장</button>
+        <button type="button" class="sys-btn btn-info">현황표</button>
+    </div>
+</div>
+
+</body>
+</html>

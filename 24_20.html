@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디지털 리터러시 작업형 문제 - NIA Money</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            margin: 20px;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 600px;
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            margin: 0 auto;
+        }
+        .question-title {
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            word-break: keep-all;
+        }
+        
+        /* 스마트폰 시뮬레이터 */
+        .phone-screen {
+            width: 100%;
+            max-width: 360px;
+            height: 540px;
+            border: 8px solid #333;
+            border-radius: 24px;
+            margin: 0 auto 20px auto;
+            background-color: #fff;
+            position: relative;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+        .phone-screen.active {
+            display: flex;
+        }
+        
+        /* 상단 바 */
+        .app-header {
+            background-color: #00b4d8;
+            color: white;
+            padding: 14px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            position: relative;
+        }
+        
+        /* 앱 콘텐츠 내부 */
+        .app-content {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8f9fa;
+            text-align: center;
+        }
+
+        /* 1단계 아이콘 */
+        .nia-icon {
+            width: 85px;
+            height: 85px;
+            background-color: #26c2ff;
+            border-radius: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border: 1px solid #1ba5db;
+            line-height: 1.3;
+        }
+        .nia-icon span {
+            font-size: 18px;
+        }
+
+        /* 금융 앱 전용 메뉴/버튼 스타일 */
+        .menu-card {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 18px;
+            width: 90%;
+            box-sizing: border-box;
+            margin-bottom: 12px;
+            cursor: pointer;
+            text-align: left;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .menu-card:hover {
+            border-color: #00b4d8;
+            background-color: #f0faff;
+        }
+
+        .action-btn {
+            background-color: #00b4d8;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: auto;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .action-btn:hover {
+            background-color: #0096b4;
+        }
+
+        /* 가상 보안 키패드 */
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            width: 100%;
+            margin-top: auto;
+            background: #e9ecef;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        .key-btn {
+            background: white;
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .key-btn:active {
+            background: #e2e6ea;
+        }
+
+        /* 암호 입력 동그라미 */
+        .pass-dots {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .dot {
+            width: 14px;
+            height: 14px;
+            background: #ced4da;
+            border-radius: 50%;
+        }
+        .dot.active {
+            background: #00b4d8;
+        }
+
+        /* 로딩 애니메이션 */
+        .spinner {
+            border: 4px solid rgba(0,0,0,0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border-left-color: #00b4d8;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 시스템 공통 하단 버튼 구역 */
+        .system-button-group {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        .sys-btn {
+            padding: 10px 24px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-secondary { background-color: #6c757d; color: #fff; }
+        .btn-primary { background-color: #1a3c6c; color: #fff; }
+        .btn-info { background-color: #4b6584; color: #fff; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="question-title">
+        [문제20] (작업형) “NIA Money” 아이콘을 누르고 작업을 시작합니다. NIA Money에 등록한 YOUNG 은행의 계좌에서 1만 엔(JPY)을 환전(충전) 하려고 합니다. 간편 비밀번호는 「864375」 입니다. 외화 머니 충전 완료 후 ‘홈으로’ 단추를 눌러 작업을 완료합니다.
+    </div>
+
+    <div class="phone-screen active" id="step1">
+        <div class="app-header" style="background:#2b2d42;">스마트 홈</div>
+        <div class="app-content">
+            <p style="font-size:13px; color:#666; margin-bottom:25px;">아래 NIA Money 앱을 실행하세요.</p>
+            <div class="nia-icon" onclick="nextStep(2)">
+                <span>NIA</span>Money
+            </div>
+        </div>
+    </div>
+
+    <div class="phone-screen" id="step2">
+        <div class="app-header">NIA 외화 머니</div>
+        <div class="app-content" style="justify-content: flex-start; padding-top:25px;">
+            <p style="font-size:14px; text-align:left; width:90%; font-weight:bold; margin-bottom:15px;">환전하실 통화를 선택하세요.</p>
+            <div class="menu-card" onclick="nextStep(3)">
+                <span style="font-size:20px; margin-right:5px;">🇯🇵</span> <b>일본 엔화 (JPY) 환전하기</b>
+                <span style="float:right; color:#aaa;">&gt;</span>
+            </div>
+            <div class="menu-card" style="opacity:0.5; cursor:default;">
+                <span style="font-size:20px; margin-right:5px;">🇺🇸</span> 미국 달러 (USD) 환전하기
+                <span style="float:right; color:#aaa;">&gt;</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="phone-screen" id="step3">
+        <div class="app-header">환전 금액 입력</div>
+        <div class="app-content" style="justify-content: flex-start; padding-top:25px;">
+            <p style="font-size:14px; font-weight:bold; width:100%; text-align:left;">얼마를 환전(충전)할까요?</p>
+            
+            <div style="background:#fff; border:1px solid #00b4d8; width:100%; padding:15px; box-sizing:border-box; border-radius:8px; text-align:right; font-size:20px; font-weight:bold; margin-top:10px; color:#00b4d8;">
+                10,000 <span style="font-size:14px; color:#333;">JPY (엔)</span>
+            </div>
+
+            <p style="font-size:12px; color:#ff4757; text-align:left; width:100%; margin-top:8px;">※ 지문 지시사항: 1만 엔 선택</p>
+            
+            <button class="action-btn" onclick="nextStep(4)">입력 완료</button>
+        </div>
+    </div>
+
+    <div class="phone-screen" id="step4">
+        <div class="app-header">충전 내용 확인</div>
+        <div class="app-content" style="justify-content: flex-start; padding-top:25px;">
+            <p style="font-size:14px; font-weight:bold; width:100%; text-align:left; margin-bottom:15px;">신청 내용을 확인해 주세요.</p>
+            
+            <div style="background:white; width:100%; border:1px solid #eee; border-radius:10px; padding:15px; box-sizing:border-box; text-align:left; font-size:13px; line-height:2.0;">
+                • <b>출금 계좌:</b> <span style="color:#00b4d8; font-weight:bold;">YOUNG 은행</span> (***-****)<br>
+                • <b>충전 통화:</b> 일본 엔화 (JPY)<br>
+                • <b>신청 금액:</b> 10,000 엔
+            </div>
+            
+            <button class="action-btn" style="background:#00b4d8;" onclick="nextStep(5)">외화 머니 충전하기</button>
+        </div>
+    </div>
+
+    <div class="phone-screen" id="step5">
+        <div class="app-header">간편 비밀번호 입력</div>
+        <div class="app-content" style="padding: 20px 0 0 0;">
+            <p style="font-size:14px; font-weight:bold;">비밀번호 6자리를 입력하세요.</p>
+            <p style="font-size:12px; color:#6c757d; margin-top:4px;">지정 암호: <b style="color:#ff4757;">864375</b></p>
+            
+            <div class="pass-dots">
+                <div class="dot" id="dot1"></div>
+                <div class="dot" id="dot2"></div>
+                <div class="dot" id="dot3"></div>
+                <div class="dot" id="dot4"></div>
+                <div class="dot" id="dot5"></div>
+                <div class="dot" id="dot6"></div>
+            </div>
+
+            <div class="keypad">
+                <button type="button" class="key-btn" onclick="pressKey(1)">1</button>
+                <button type="button" class="key-btn" onclick="pressKey(2)">2</button>
+                <button type="button" class="key-btn" onclick="pressKey(3)">3</button>
+                <button type="button" class="key-btn" onclick="pressKey(4)">4</button>
+                <button type="button" class="key-btn" onclick="pressKey(5)">5</button>
+                <button type="button" class="key-btn" onclick="pressKey(6)">6</button>
+                <button type="button" class="key-btn" onclick="pressKey(7)">7</button>
+                <button type="button" class="key-btn" onclick="pressKey(8)">8</button>
+                <button type="button" class="key-btn" onclick="pressKey(9)">9</button>
+                <button type="button" class="key-btn">초기화</button>
+                <button type="button" class="key-btn" onclick="pressKey(0)">0</button>
+                <button type="button" class="key-btn">←</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="phone-screen" id="step6">
+        <div class="app-header">안전하게 처리 중</div>
+        <div class="app-content">
+            <div class="spinner"></div>
+            <p style="font-size:14px; font-weight:bold;">YOUNG 은행에서 출금하여<br>엔화로 환전하고 있습니다.</p>
+            <script>
+                // 6단계는 진입 후 1.5초 뒤 자동으로 7단계 완료창으로 이동함
+                document.getElementById('step6').addEventListener('activate', function() {
+                    setTimeout(function() { nextStep(7); }, 1500);
+                });
+            </script>
+        </div>
+    </div>
+
+    <div class="phone-screen" id="step7">
+        <div class="app-header">충전 완료</div>
+        <div class="app-content">
+            <div style="font-size:36px; margin-bottom:10px;">🎉</div>
+            <p style="font-size:15px; font-weight:bold; color:#00b4d8;">10,000 JPY 충전 완료!</p>
+            <p style="font-size:12px; color:#666; margin-top:5px; line-height:1.5;">
+                YOUNG 은행 계좌에서 정상 출금되어<br>외화지갑에 보관되었습니다.
+            </p>
+            
+            <button class="action-btn" style="background-color:#2b2d42; margin-top:30px;" onclick="nextStep(8)">홈으로</button>
+        </div>
+    </div>
+
+    <div class="phone-screen" id="step8">
+        <div class="app-header" style="background:#1a3c6c;">과제 종료</div>
+        <div class="app-content">
+            <div style="font-size:40px; margin-bottom:10px;">✅</div>
+            <h3 style="margin:0 0 10px 0; color:#1a3c6c;">작업 완료!</h3>
+            <p style="font-size:13px; color:#555; line-height:1.6; word-break:keep-all;">
+                NIA Money 외화 충전 모의 실습을<br>성공적으로 마쳤습니다.<br>
+                하단의 <strong>[답안저장]</strong> 버튼을 클릭하세요.
+            </p>
+        </div>
+    </div>
+
+    <div class="system-button-group">
+        <button type="button" class="sys-btn btn-secondary" onclick="window.location.href='index.html';">이전</button>
+        <button type="button" class="sys-btn btn-primary" onclick="alert('답안이 안전하게 저장되었습니다.')">답안저장</button>
+        <button type="button" class="sys-btn btn-info">현황표</button>
+    </div>
+</div>
+
+<script>
+    // 페이지 전환 스크립트
+    function nextStep(stepNumber) {
+        const screens = document.querySelectorAll('.phone-screen');
+        screens.forEach(screen => screen.classList.remove('active'));
+        
+        const nextScreen = document.getElementById('step' + stepNumber);
+        if (nextScreen) {
+            nextScreen.classList.add('active');
+            
+            // 6단계 로딩 자동 전환 이벤트 트리거
+            if (stepNumber === 6) {
+                const event = new Event('activate');
+                nextScreen.dispatchEvent(event);
+            }
+        }
+    }
+
+    // 초기 상태로 리셋
+    function resetTask() {
+        inputCount = 0;
+        for(let i=1; i<=6; i++) {
+            document.getElementById('dot' + i).classList.remove('active');
+        }
+        nextStep(1);
+    }
+
+    // 5단계 비밀번호 누르기 모션 제어
+    let inputCount = 0;
+    function pressKey(num) {
+        if(inputCount < 6) {
+            inputCount++;
+            document.getElementById('dot' + inputCount).classList.add('active');
+            
+            // 6자리가 모두 채워지면 자동으로 6단계(로딩)로 이동
+            if(inputCount === 6) {
+                setTimeout(function() {
+                    nextStep(6);
+                }, 300);
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
